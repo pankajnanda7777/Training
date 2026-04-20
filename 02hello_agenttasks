@@ -1,0 +1,18 @@
+import os
+from dotenv import load_dotenv
+from openai import OpenAI
+load_dotenv()
+client = OpenAI()
+tasks = ["suggest a good book on AI", "find the latest news on GENAI", "Recommend a good restaurant in Delhi"]
+for task in tasks:
+    print(f"Agent received tasks: {task}")
+    response = client.chat.completions.create( 
+        model="gpt-4o-mini",
+        messages=[
+            {"role": "system", "content": "You are a helpful assistant that can perform various tasks."},
+            {"role": "user", "content": f"Please {task}."}
+        ]
+    )
+    print(f"Agent response for task '{task}': {response.choices[0].message.content}\n")
+    #response.choices[0].message.content  prints the content of the message from the response for each task. 
+    # choices is a list of possible completions, and we are accessing the first one (index 0) to get the content of the message.
